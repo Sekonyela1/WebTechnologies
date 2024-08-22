@@ -3,18 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whack_A_Mole_Game</title>
+    <title>Whack A Mole Game</title>
     <link rel="stylesheet" href="mole.css">
-    <script src="mole.js"></script>
+    <script src="mole.js" defer></script>
 </head>
 <body>
-    <h1>Whac a Mole</h1>
-    <h2 id="scorePlayer1">Player 1 Score: 0</h2>
-    <h2 id="scorePlayer2">Player 2 Score: 0</h2>
-    <!-- 3x3 -->
-    <div id="board">
+    <h1>Whack A Mole Game</h1>
+
+    <div id="leaderboard">
+        <h2>Leaderboard & Achievements</h2>
+        <ul id="leaderboard-achievements-list">
+        </ul>
+        <button id="download-leaderboard" class="button">Download Leaderboard</button>
+        <label for="difficulty">Select Difficulty:</label>
+        <style>
+            .achievement-modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                border: 2px solid #888;
+                width: 300px;
+                padding: 20px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            }
+        
+            .modal-content {
+                padding: 20px;
+            }
+        
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+        
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        </style>
+        <div class="achievement-modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p></p>
+            </div>
+        </div>
     </div>
-    <div id="timer">Time left: 60s</div> <!-- Timer element -->
-    <button id="startButton">Start Game</button> <!-- Start button -->
+    
+    <div id="controls">
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+        <button id="startButton">Start Game</button>
+    </div>
+    <div class="mole regular-mole"></div>
+    <div class="mole bonus-mole"></div>
+    <div class="mole freeze-powerup"></div>
+    <div class="mole double-points"></div>
+    <div class="mole penalty-mole"></div>
+
+    <div id="scoreboard">
+        <div class="player-score" id="scorePlayer1">Player 1 Score: <span class="score">0</span></div>
+        <div class="player-score" id="scorePlayer2">Player 2 Score: <span class="score">0</span></div>
+    </div>
+    
+    <!-- Player Name Modal -->
+    <div id="nameModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeNameModal()">&times;</span>
+            <h2>Enter Player Names</h2>
+            <label for="player1Name">Player 1 Name:</label>
+            <input type="text" id="player1Name" placeholder="Enter Player 1 Name">
+            <label for="player2Name">Player 2 Name:</label>
+            <input type="text" id="player2Name" placeholder="Enter Player 2 Name">
+            <button onclick="submitScore()">Submit</button>
+        </div>
+    </div>
+    <div id="timer">Time left: 60s</div>
+    <canvas id="confettiCanvas"></canvas>
+
+    <div id="board"></div>
+
+    <div id="instructionsButton">Instructions</div>
+
+    <!-- The Instructions Modal -->
+    <div id="instructionsModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Game Instructions</h2>
+            <p>Click on the moles to score points. Avoid clicking on the plants to prevent losing points. The game lasts for 60 seconds. The player with the highest score wins. Good luck!</p>
+        </div>
+    </div>
 </body>
 </html>

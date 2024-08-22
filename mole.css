@@ -3,53 +3,129 @@ body {
     text-align: center;
     background: url("./mario-bg.jpg");
     background-size: cover;
+    cursor: url("./hammer.png"), auto;
+    margin: 0;
+    padding: 0;
 }
 
 #board {
     width: 540px;
     height: 540px;
-    /* background-color: green; */
-
-    margin: 0 auto;
+    margin: 20px auto;
     display: flex;
     flex-wrap: wrap;
-
     background: url("./soil.png");
     background-size: cover;
     border: 3px solid white;
     border-radius: 25px;
+     
 }
 
 #board div {
-    /* board = 540 x 540, divide into 3x3 tiles --> 180 x 180 per div */
     width: 180px; 
-    height: 180px;
+    height: 130px;
     background: url("./pipe.png");
     background-size: cover;
-    
+    cursor: url("./hammer.png"), auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#board {
+    cursor: url ("./hammer.png"), auto;
+    }
+
+/* General styling for the cursor */
+body, html {
+    cursor: url('./hammer.png'), auto; /* Default cursor for the entire page */
+}
+
+/* Change cursor to hammer when hovering over the game tiles */
+.tile, #board {
+    cursor: url('./hammer.png'), auto; /* Hammer cursor on the game board and tiles */
+}
+
+/* Optional: Change the cursor to a pointer when hovering over buttons or interactive elements */
+button, #startButton, #instructionsButton {
+    cursor: pointer;
 }
 
 #board div img {
-    /* all img tags inside tiles */
     width: 100px;
     height: 100px;
-
     user-select: none;
     -moz-user-select: none;
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    /*position: absolute;*/
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 10;
+}
+
+#controls label {
+    font-size: 22px; 
+    font-weight: bold; 
+    color: #020802; 
+    margin-bottom: 15px;
+    display: block;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+    padding: 5px 0; 
+    border-bottom: 2px solid #4CAF50; 
+    transition: color 0.3s ease; 
+}
+
+/* Pipe Container */
+.pipe {
+    position: relative;
+    width: 100px; 
+    height: 150px; 
+}
+
+/* Pipe Image */
+.pipe img {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+}
+
+/* Mole or Plant */
+.pipe .mole, .pipe .plant {
+    position: absolute;
+    bottom: -20px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2; 
+}
+
+#controls label:hover {
+    color: #4CAF50; 
+}
+
+h1 {
+    font-size: 36px;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 #timer {
     font-weight: bold;
-    font-size: 24px; /* Adjust the font size as needed */
-    color: #333; /* Change the color to match your design */
-    text-align: center; /* Center the text */
-    margin-top: 20px; /* Add some space between the score and timer */
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
 }
 
-#startButton {
+#startButton, #difficulty {
     background-color: #4CAF50;
     border: none;
     color: white;
@@ -61,4 +137,318 @@ body {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#startButton:hover, #difficulty:hover {
+    background-color: #45a049;
+}
+
+#difficulty {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: auto;
+    margin-top: 10px;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuNzUgMEw2IDQuMjVsNC4yNS00LjI1TDEyIDEuNzVMNiA3LjVsLTUuMjUtNS43NVpNNiA4TDQuODIgNi45MmwxLjE4LTEuMTgiIGZpbGw9IiMzMzMiLz48L3N2Zz4=');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#scoreboard {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.player-score {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.score {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+#instructionsButton {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#instructionsButton:hover {
+    background-color: #45a049;
+    transform: scale(1.05); 
+}
+
+#instructionsButton:active {
+    background-color: #3e8e41;
+    transform: scale(0.98); 
+}
+
+#instructionsButton:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px rgba(0, 128, 0, 0.4); 
+}
+
+#leaderboard {
+    margin-top: 20px;
+}
+
+#leaderboard h2 {
+    font-size: 24px;
+    color: #333;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#leaderboard-list li {
+    background-color: rgba(255, 255, 255, 0.8);
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Styling the delete button */
+.delete-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Hover effect for the delete button */
+.delete-btn:hover {
+    background-color: #45a049; 
+}
+
+/* Ensure list items align properly with the delete button */
+#leaderboard-list li {
+    list-style-type: none;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+
+#confettiCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+#leaderboard-achievements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#leaderboard-achievements-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+#leaderboard-achievements-list li div {
+    flex: 1;
+    text-align: left;
+    padding: 0 10px;
+}
+
+#leaderboard-achievements-list li div:last-child {
+    text-align: right;
+}
+
+#leaderboard-achievements-list li div.delete-btn {
+    justify-content: flex-end;
+}
+
+ul#leaderboard-achievements-list,
+ul#achievements-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+ul#leaderboard-achievements-list li,
+ul#achievements-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.achievement-name {
+    flex: 1;
+    text-align: left;
+}
+
+.achievement-score {
+    flex: 0;
+    text-align: right;
+    padding-left: 20px; 
+}
+
+#download-leaderboard {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #45a049; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+#download-leaderboard:hover {
+    background-color: #45a049; /* Darker blue on hover */
+}
+
+.bonus-mole {
+    background-color: gold; /* Distinct color for bonus mole */
+}
+
+.freeze-powerup {
+    background-color: blue; /* Distinct color for freeze power-up */
+}
+
+.double-points {
+    background-color: green; /* Distinct color for double points */
+}
+
+.penalty-mole {
+    background-color: red; /* Distinct color for penalty mole */
 }
